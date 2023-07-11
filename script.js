@@ -1,4 +1,4 @@
-
+// 텍스트 작성 및 삭제 함수 : 즉시 실행 
 (function(){
   const spanEl = document.querySelector("main h2 span");
   const txtArr = ['SpringFramwork Developer', 'Server-End Developer', 'Java-Based Web Developer', 'Data Analyst', 'Big-Data Developer'];
@@ -26,3 +26,65 @@
   }
   writeTxt();
 })();
+
+// 상하 scroll 발생시 header 태그에 active 클래스 추가(삭제)
+// 아래로 scroll 이 발생해서 browerScrollY 가 0 보다 커지면 추가하고
+// 화면이 최상단으로 나와서 (scroll 이 발생하지 않은 상태)
+// browerScrollY 가 0 이 되면 삭제함
+const headerEl = document.querySelector("header");
+window.addEventListener("scroll", function(){
+  // scrollCheck();
+  requestAnimationFrame(scrollCheck);
+});
+function scrollCheck(){
+  let browerScrollY = window.scrollY ? window.scrollY : window.pageYOffset;
+  if(browerScrollY > 0){
+    headerEl.classList.add("active");
+  }else{
+    headerEl.classList.remove("active");
+  }
+}
+
+// animation scroll 이동
+const animationMove = function(selector){
+  // ① 매개변수로 들어온 selector 로 이동할 대상 요소 노드 가져오기
+  const targetEl = document.querySelector(selector);
+  // ② 현재 브라우저의 스크롤 정보(y 값)
+  const browserScrollY = window.pageYOffset;
+  // ③ 이동할 대상의 위치(y 값)
+  const targetScrollY = targetEl.getBoundingClientRect().top + browserScrollY;
+  // ④ 스크롤 이동
+  window.scrollTo({ top: targetScrollY, behavior: 'smooth' });
+};
+// 스크롤 이벤트 연결하기
+const scrollMoveEl = document.querySelectorAll("[data-animation-scroll='true']"); 
+for(let i = 0; i < scrollMoveEl.length; i++){
+  scrollMoveEl[i].addEventListener('click', function(e){
+    const target = this.dataset.target;
+    animationMove(target);
+  });
+}
+
+/*
+element.getBoundingClientRect().x : 현재 창기준 x좌표
+element.getBoundingClientRect().y : 현재 창기준 y좌표
+element.getBoundingClientRect().width : 엘리먼트 가로
+element.getBoundingClientRect().height : 엘리먼트 세로
+element.getBoundingClientRect().top : 현재 창기준 세로 시작점 부터 엘리먼트 윗변 까지의 거리
+element.getBoundingClientRect().left : 현재 창기준 가로 시작점 부터 엘리먼트 왼쪽변 까지의 거리
+element.getBoundingClientRect().right : 현재 창기준 가로 시작점 부터 엘리먼트 오른쪽변 까지의 거리
+element.getBoundingClientRect().bottom : 현재 창기준 세로 시작점 부터 엘리먼트 아래변 까지의 거리
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
